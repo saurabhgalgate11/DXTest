@@ -13,8 +13,9 @@
 	<classpathentry kind="lib" path="F:/Softwares/libsss/libs/httpcore-4.4.6.jar"/>
 	<classpathentry kind="lib" path="F:/Softwares/libsss/libs/okhttp-3.9.1.jar"/>
 	<classpathentry kind="lib" path="F:/Softwares/libsss/libs/okio-1.13.0.jar"/>
-	<classpathentry kind="lib" path="F:/Softwares/libsss/selenium-java-2.53.1/selenium-2.53.1/selenium-java-2.53.1.jar"/>
-	<classpathentry kind="lib" path="F:/Softwares/libsss/libs/java-client-6.0.0-BETA5.jar"/>
 	<classpathentry kind="lib" path="F:/Bipin class/software/selenium-java-2.53.1/selenium-2.53.1/libs/testng-6.9.9.jar"/>
+	<classpathentry kind="lib" path="F:/Softwares/android-studio/lib/android-base-common.jar"/>
+	<classpathentry kind="lib" path="F:/Softwares/libsss/selenium-server-standalone-3.11.0.jar"/>
+	<classpathentry kind="lib" path="F:/Softwares/libsss/java-client-5.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
