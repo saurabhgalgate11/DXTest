@@ -26,6 +26,7 @@ public class LaunchAppClass {
 		capabilities.setCapability("appPackage", "in.amazon.mShop.android.shopping");
 		capabilities.setCapability("appActivity", "com.amazon.mShop.home.HomeActivity");
 
+		//changes in code
 		driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 		driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
 		Thread.sleep(10000);
