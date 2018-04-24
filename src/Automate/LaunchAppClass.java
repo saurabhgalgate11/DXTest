@@ -72,10 +72,17 @@ public class LaunchAppClass{
 			    String product_name = driver.findElementById("com.ebay.mobile:id/textview_item_name").getText();
 			    System.out.println("Product Name=="+product_name+"=Product Price="+filterAmount(product_price));
 			    
-			    assertEquals(product_price, "70499");
+			    Thread.sleep(1000);
+			    //test case to check the expected and found values are equal 
+			    assertEquals(filterAmount(product_price), AppConstants.PRODUCT_EXPECTED_PRICE);
+			    assertEquals(product_name, AppConstants.PRODUCT_EXPECTED_NAME);
+			    System.out.println("After Assert==");
+
+			    Thread.sleep(1000);
+			    driver.findElementById("com.ebay.mobile:id/button_bin").click();;
 			    
-			   /* Thread.sleep(1000);
-			    driver.close();*/
+			    Thread.sleep(1000);
+			    driver.close();
 			   
 		}catch(Exception e){
 			// TODO Auto-generated catch block

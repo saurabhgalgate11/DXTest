@@ -12,4 +12,8 @@ public class AppConstants {
 	
 	public static String APIUM_SERVER_URL = "http://127.0.0.1:4723/wd/hub";
 	
+	public static int PRODUCT_EXPECTED_PRICE = 70499;
+	public static String PRODUCT_EXPECTED_NAME = "65 inch 4K UHD ANDROID SMART SAMSUNG PANEL 8GB LED TV +REPLACEMENT WARRANTY";
+	
+	
 }
