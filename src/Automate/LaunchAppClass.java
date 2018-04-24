@@ -3,36 +3,27 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.server.handler.interactions.touch.Down;
-import org.openqa.selenium.remote.server.handler.interactions.touch.Scroll;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
+
+
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-;
 
 public class LaunchAppClass{
 
 	private static AndroidDriver driver;
-	//private static AndroidDriver andDriver;
+
+	
 	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 
 		
-		
 		   try {
+			   
 			    // Create path to open apk and launch tp install 
 			    File classpathRoot = new File(System.getProperty("user.dir"));
 				File appDir = new File(classpathRoot, "/Apps/Ebay/");
@@ -41,55 +32,66 @@ public class LaunchAppClass{
 				//Create Capabilities to launch app using package and launching activity
 				DesiredCapabilities capabilities = new DesiredCapabilities();
 				capabilities.setCapability(CapabilityType.BROWSER_NAME, "Android");
-				capabilities.setCapability("deviceName", "Moto G5s Plus");
-				capabilities.setCapability("platformVersion", "7.1.1");
-				capabilities.setCapability("platformName", "Android");
+				capabilities.setCapability("deviceName", AppConstants.DEVICE_NAME);
+				capabilities.setCapability("platformVersion", AppConstants.DEVICE_PLATFORM_VERSION);
+				capabilities.setCapability("platformName",AppConstants.DEVICE_PLATFORM_NAME);
 				capabilities.setCapability("app", app.getAbsolutePath());
-				capabilities.setCapability("appPackage", "com.ebay.mobile");
-				capabilities.setCapability("appActivity", "com.ebay.mobile.activities.MainActivity");
+				capabilities.setCapability("appPackage", AppConstants.APP_PACKAGE);
+				capabilities.setCapability("appActivity", AppConstants.APP_LAUNCHING_ACTIVITY);
  
-			    //Create RemoteWebDriver instance and connect to the Appium server
+			    //Create AndroidDriver instance and connect to the Appium server
 			    //specified in Desired Capabilities
-				//driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-				driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+				driver = new AndroidDriver(new URL(AppConstants.APIUM_SERVER_URL), capabilities);
 			    
 			    Thread.sleep(15000);
 			    
 			    //Click nutton of SIGN IN to redirect on login page 
 			    //driver.findElementById("com.ebay.mobile:id/button_sign_in").click();
 			    
-
 			    driver.findElementById("com.ebay.mobile:id/search_box").click();
 			    
-			    Thread.sleep(2000);
+			    Thread.sleep(500);
+			    
 			    driver.findElementById("com.ebay.mobile:id/search_src_text").sendKeys("65-inch TV"+"\n");
 			 
-			   /* Thread.sleep(3000);
-			    AndroidElement list = (AndroidElement) driver.findElement(By.id("com.ebay.mobile:id/recycler"));
-		        MobileElement listGroup = list
-		                .findElement(MobileBy
-		                        .AndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
-		                                + "new UiSelector().text(\" List item:10\"));"));*/
+		        Thread.sleep(5000);
+	
+		        //fetch the listinstance and get the number of items in list to select any rondomly 
+			    WebElement element = driver.findElementById("com.ebay.mobile:id/recycler");
+			    List <WebElement> list = element.findElements(By.id("com.ebay.mobile:id/cell_collection_item"));
 			    
+			    int generated_random_number = getRandom(list.size());
+			    //System.out.println("List SIze-->"+list.size()+"=Random Number="+generated_random_number);
+			    list.get(generated_random_number).click();
 			    
-			   // driver;
+			    Thread.sleep(2000);
 			    
-		        Thread.sleep(10000);
-			    List<WebElement> list2 = driver.findElements(By.id("com.ebay.mobile:id/recycler"));
-			    System.out.println("List SIze-->"+list2.size());
-			    Thread.sleep(100);
+			    String product_price = driver.findElementById("com.ebay.mobile:id/textview_item_price").getText();
+			    String product_name = driver.findElementById("com.ebay.mobile:id/textview_item_name").getText();
+			    System.out.println("Product Name=="+product_name+"=Product Price="+filterAmount(product_price));
+			    
+			   /* Thread.sleep(1000);
+			    driver.close();*/
 			   
-			    
-			    
-			    
-		} catch (Exception e) {
+		}catch(Exception e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public static int getRandom(int max){ // 
-		return (int) (Math.random()*max); //incorrect always return zero return (int) (Math.random()*max); }
+
+	//Generate a number between the specified max value 
+	public static int getRandom(int max){
+		Random objGenerator = new Random();
+		return objGenerator.nextInt(max);
 	}
+	
+	
+	public static int filterAmount(String prodPrice){
+		prodPrice =prodPrice.replaceAll("[^\\d.]", "").trim();
+		return Integer.parseInt(prodPrice);
+	}
+	
+	
+	
 
 }
