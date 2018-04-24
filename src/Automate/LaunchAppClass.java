@@ -1,4 +1,6 @@
 package Automate;
+import static org.testng.Assert.assertEquals;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -69,6 +71,8 @@ public class LaunchAppClass{
 			    String product_price = driver.findElementById("com.ebay.mobile:id/textview_item_price").getText();
 			    String product_name = driver.findElementById("com.ebay.mobile:id/textview_item_name").getText();
 			    System.out.println("Product Name=="+product_name+"=Product Price="+filterAmount(product_price));
+			    
+			    assertEquals(product_price, "70499");
 			    
 			   /* Thread.sleep(1000);
 			    driver.close();*/
